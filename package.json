@@ -77,11 +77,14 @@
     "prettier:write": "prettier --write \"**/*.{js,json,md,sol,ts,yml}\"",
     "test": "hardhat test",
     "test:sepolia": "hardhat test --network sepolia",
+    "test:blindnft": "hardhat test test/BlindNFT-Comprehensive.ts --network sepolia",
+    "test:blindnft:verbose": "hardhat test test/BlindNFT-Comprehensive.ts --network sepolia --verbose",
     "build:ts": "tsc --project tsconfig.json",
     "typechain": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain",
     "chain": "hardhat node --network hardhat --no-deploy",
     "deploy:localhost": "hardhat deploy --network localhost",
     "deploy:sepolia": "hardhat deploy --network sepolia",
+    "deploy:blindnft": "hardhat deploy --tags BlindNFT --network sepolia",
     "verify:sepolia": "hardhat verify --network sepolia"
   },
   "overrides": {

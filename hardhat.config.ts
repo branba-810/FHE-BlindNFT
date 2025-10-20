@@ -11,10 +11,14 @@ import "solidity-coverage";
 
 import "./tasks/accounts";
 import "./tasks/FHECounter";
+import "./tasks/BlindNFT";
 
 // Run 'npx hardhat vars setup' to see the list of variables that need to be set
 
 const MNEMONIC: string = vars.get("MNEMONIC", "test test test test test test test test test test test junk");
+const PRIVATE_KEY: string = vars.get("PRIVATE_KEY", "");
+const PRIVATE_KEYA: string = vars.get("PRIVATE_KEYA", "");
+const PRIVATE_KEYB: string = vars.get("PRIVATE_KEYB", "");
 const INFURA_API_KEY: string = vars.get("INFURA_API_KEY", "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
 
 const config: HardhatUserConfig = {
@@ -49,13 +53,40 @@ const config: HardhatUserConfig = {
       url: "http://localhost:8545",
     },
     sepolia: {
-      accounts: {
-        mnemonic: MNEMONIC,
-        path: "m/44'/60'/0'/0/",
-        count: 10,
-      },
+      accounts: (() => {
+        // 收集所有可用的私钥
+        const keys = [];
+        if (PRIVATE_KEY) keys.push(PRIVATE_KEY);
+        if (PRIVATE_KEYA) keys.push(PRIVATE_KEYA);
+        if (PRIVATE_KEYB) keys.push(PRIVATE_KEYB);
+        
+        // 如果有足够的私钥（至少3个）则使用私钥，否则使用助记词
+        return keys.length >= 3 ? keys : {
+          mnemonic: MNEMONIC,
+          path: "m/44'/60'/0'/0/",
+          count: 10,
+        };
+      })(),
       chainId: 11155111,
       url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
+    },
+    zamaSepolia: {
+      accounts: (() => {
+        // 收集所有可用的私钥
+        const keys = [];
+        if (PRIVATE_KEY) keys.push(PRIVATE_KEY);
+        if (PRIVATE_KEYA) keys.push(PRIVATE_KEYA);
+        if (PRIVATE_KEYB) keys.push(PRIVATE_KEYB);
+        
+        // 如果有足够的私钥（至少3个）则使用私钥，否则使用助记词
+        return keys.length >= 3 ? keys : {
+          mnemonic: MNEMONIC,
+          path: "m/44'/60'/0'/0/",
+          count: 10,
+        };
+      })(),
+      chainId: 8009,
+      url: "https://devnet.zama.ai",
     },
   },
   paths: {
