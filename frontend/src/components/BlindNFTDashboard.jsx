@@ -588,7 +588,7 @@ function BlindNFTDashboard() {
         setDecryptedAttributes(allDecrypted)
       }
       
-      setStatusMessage({ type: 'success', message: `✅ NFT #${tokenId} 解密成功！` })
+     // setStatusMessage({ type: 'success', message: `✅ NFT #${tokenId} 解密成功！` })
       fetchUserNFTs()
     } catch (err) {
       console.error('解密失败:', err)
